@@ -110,7 +110,39 @@ def jacobi_iteration_method(
     table: NDArray[float64] = np.concatenate(
         (coefficient_matrix, constant_matrix), axis=1
     )
+    
 
     rows, cols = table.shape
 
     strictly_diagonally_dominant(table)
+    
+    """
+    # Iterates the whole matrix for given number of times
+    for _ in range(iterations):
+        new_val = []
+        for row in range(rows):
+            temp = 0
+            for col in range(cols):
+                if col == row:
+                    denom = table[row][col]
+                elif col == cols - 1:
+                    val = table[row][col]
+                else:
+                    temp += (-1) * table[row][col] * init_val[col]
+            temp = (temp + val) / denom
+            new_val.append(temp)
+        init_val = new_val
+    """
+
+    # denominator - a list of values along the diagonal
+    denominator = np.diag(coefficient_matrix)
+
+    # val_last - values of the last column of the table array
+    val_last = table[:, -1]
+
+    # masks - boolean mask of all strings without diagonal
+    # elements array coefficient_matrix
+    masks = ~np.eye(coefficient_matrix.shape[0], dtype=bool)
+
+    # no_diagonals - coefficient_matrix array values without diagonal elements
+    no_diagonals = coefficient_matrix[masks].reshape(-1, rows - 1)
