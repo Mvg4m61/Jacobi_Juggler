@@ -27,3 +27,58 @@ def jacobi_iteration_method(
     x_init = [0.5, -0.5 , -0.5]
 
     Examples:
+    
+    >>> coefficient = np.array([[4, 1, 1], [1, 5, 2], [1, 2, 4]])
+    >>> constant = np.array([[2], [-6], [-4]])
+    >>> init_val = [0.5, -0.5, -0.5]
+    >>> iterations = 3
+    >>> jacobi_iteration_method(coefficient, constant, init_val, iterations)
+    [0.909375, -1.14375, -0.7484375]
+
+
+    >>> coefficient = np.array([[4, 1, 1], [1, 5, 2]])
+    >>> constant = np.array([[2], [-6], [-4]])
+    >>> init_val = [0.5, -0.5, -0.5]
+    >>> iterations = 3
+    >>> jacobi_iteration_method(coefficient, constant, init_val, iterations)
+    Traceback (most recent call last):
+        ...
+    ValueError: Coefficient matrix dimensions must be nxn but received 2x3
+
+    >>> coefficient = np.array([[4, 1, 1], [1, 5, 2], [1, 2, 4]])
+    >>> constant = np.array([[2], [-6]])
+    >>> init_val = [0.5, -0.5, -0.5]
+    >>> iterations = 3
+    >>> jacobi_iteration_method(
+    ...     coefficient, constant, init_val, iterations
+    ... )  # doctest: +NORMALIZE_WHITESPACE
+    Traceback (most recent call last):
+        ...
+    ValueError: Coefficient and constant matrices dimensions must be nxn and nx1 but
+                received 3x3 and 2x1
+
+    >>> coefficient = np.array([[4, 1, 1], [1, 5, 2], [1, 2, 4]])
+    >>> constant = np.array([[2], [-6], [-4]])
+    >>> init_val = [0.5, -0.5]
+    >>> iterations = 3
+    >>> jacobi_iteration_method(
+    ...     coefficient, constant, init_val, iterations
+    ... )  # doctest: +NORMALIZE_WHITESPACE
+    Traceback (most recent call last):
+        ...
+    ValueError: Number of initial values must be equal to number of rows in coefficient
+                matrix but received 2 and 3
+
+    >>> coefficient = np.array([[4, 1, 1], [1, 5, 2], [1, 2, 4]])
+    >>> constant = np.array([[2], [-6], [-4]])
+    >>> init_val = [0.5, -0.5, -0.5]
+    >>> iterations = 0
+    >>> jacobi_iteration_method(coefficient, constant, init_val, iterations)
+    Traceback (most recent call last):
+        ...
+    ValueError: Iterations must be at least 1
+    """
+
+    rows1, cols1 = coefficient_matrix.shape
+    rows2, cols2 = constant_matrix.shape
+
