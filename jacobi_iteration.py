@@ -163,7 +163,6 @@ def jacobi_iteration_method(
 
     return new_val.tolist()
 
-
 # Checks if the given matrix is strictly diagonally dominant
 def strictly_diagonally_dominant(table: NDArray[float64]) -> bool:
     """
