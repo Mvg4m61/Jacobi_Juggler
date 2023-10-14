@@ -81,6 +81,7 @@ def jacobi_iteration_method(
 
     rows1, cols1 = coefficient_matrix.shape
     rows2, cols2 = constant_matrix.shape
+    
   if rows1 != cols1:
         msg = f"Coefficient matrix dimensions must be nxn but received {rows1}x{cols1}"
         raise ValueError(msg)
