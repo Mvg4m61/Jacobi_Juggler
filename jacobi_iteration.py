@@ -145,3 +145,59 @@ def jacobi_iteration_method(
 
     # no_diagonals - coefficient_matrix array values without diagonal elements
     no_diagonals = coefficient_matrix[masks].reshape(-1, rows - 1)
+    
+    # Here we get 'i_col' - these are the column numbers, for each row
+    # without diagonal elements, except for the last column.
+    i_row, i_col = np.where(masks)
+    ind = i_col.reshape(-1, rows - 1)
+
+    #'i_col' is converted to a two-dimensional list 'ind', which will be
+    # used to make selections from 'init_val' ('arr' array see below).
+
+    # Iterates the whole matrix for given number of times
+    for _ in range(iterations):
+        arr = np.take(init_val, ind)
+        sum_product_rows = np.sum((-1) * no_diagonals * arr, axis=1)
+        new_val = (sum_product_rows + val_last) / denominator
+        init_val = new_val
+
+    return new_val.tolist()
+
+
+# Checks if the given matrix is strictly diagonally dominant
+def strictly_diagonally_dominant(table: NDArray[float64]) -> bool:
+    """
+    >>> table = np.array([[4, 1, 1, 2], [1, 5, 2, -6], [1, 2, 4, -4]])
+    >>> strictly_diagonally_dominant(table)
+    True
+
+    >>> table = np.array([[4, 1, 1, 2], [1, 5, 2, -6], [1, 2, 3, -4]])
+    >>> strictly_diagonally_dominant(table)
+    Traceback (most recent call last):
+        ...
+    ValueError: Coefficient matrix is not strictly diagonally dominant
+    """
+
+    rows, cols = table.shape
+
+    is_diagonally_dominant = True
+
+    for i in range(rows):
+        total = 0
+        for j in range(cols - 1):
+            if i == j:
+                continue
+            else:
+                total += table[i][j]
+
+        if table[i][i] <= total:
+            raise ValueError("Coefficient matrix is not strictly diagonally dominant")
+
+    return is_diagonally_dominant
+
+
+# Test Cases
+if __name__ == "__main__":
+    import doctest
+
+    doctest.testmod()
