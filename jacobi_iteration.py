@@ -111,7 +111,6 @@ def jacobi_iteration_method(
         (coefficient_matrix, constant_matrix), axis=1
     )
     
-
     rows, cols = table.shape
 
     strictly_diagonally_dominant(table)
