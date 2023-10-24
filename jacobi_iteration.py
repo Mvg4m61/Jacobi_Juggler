@@ -193,5 +193,9 @@ def strictly_diagonally_dominant(table: NDArray[float64]) -> bool:
 
     return is_diagonally_dominant
 
+# Test Cases
+if __name__ == "__main__":
+    import doctest
 
+    doctest.testmod()
 
